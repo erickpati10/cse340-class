@@ -1,8 +1,10 @@
+
+Drop TYPE IF EXISTS public.account_type;
 CREATE TYPE public.account_type AS ENUM 
     ('Client', 'Employee', 'Admin');
 
-ALTER TYPE public.account_type
-    OWNER to cse340 Database
+-- ALTER TYPE public.account_type
+--     OWNER to cse340 Database
 
 
 -- Table structure for table `classification`
@@ -13,7 +15,7 @@ CREATE TABLE public.classification(
     CONSTRAINT classification_pk PRIMARY KEY (classification_id)
 );
 
--- Table sstructure for table `inventory`
+-- Table structure for table `inventory`
 
 CREATE TABLE IF NOT EXISTS public. inventory
 (
