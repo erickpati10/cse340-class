@@ -27,12 +27,12 @@ app.set("layout", "./layouts/layout");
  *************************/
 app.use(static);
 
-app.use("/inv", inventoryRoute);
-
 // app.use(require("./routes/static"));
 
 //index route
 app.get("/", baseController.buildHome);
+
+app.use("/inv", inventoryRoute);
 
 /* ***********************
  * Local Server Information
