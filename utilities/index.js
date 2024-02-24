@@ -24,8 +24,6 @@ Util.getNav = async function (req, res, next) {
   return list;
 };
 
-router.get("/type/:classificationId", invController.buildByClassificationId);
-
 module.exports = Util;
 
 /* **************************************
