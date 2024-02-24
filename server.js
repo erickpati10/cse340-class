@@ -7,6 +7,7 @@
  *************************/
 
 const baseController = require("./controllers/baseController");
+const inventoryRoute = require("./routes/inventory");
 
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
