@@ -27,6 +27,8 @@ app.set("layout", "./layouts/layout");
  *************************/
 app.use(static);
 
+app.use("/inv", inventoryRoute);
+
 // app.use(require("./routes/static"));
 
 //index route
