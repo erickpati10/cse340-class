@@ -77,4 +77,34 @@ Util.getNav = async function (req, res, next) {
   return list;
 };
 
+/* ****************************************
+ * Wrap vehicle details in HTML
+ **************************************** */
+Util.wrapVehicleDetailsInHTML = (vehicleDetails) => {
+  return `
+    <div>
+      <h2>${vehicleDetails.inv_make} ${vehicleDetails.inv_model}</h2>
+      <img src="${vehicleDetails.inv_image}" alt="${vehicleDetails.inv_make} ${
+    vehicleDetails.inv_model
+  }">
+      <p>Year: ${vehicleDetails.inv_year}</p>
+      <p>Price: $${new Intl.NumberFormat("en-US").format(
+        vehicleDetails.inv_price
+      )}</p>
+      <p>Mileage: ${new Intl.NumberFormat("en-US").format(
+        vehicleDetails.inv_miles
+      )} miles</p>
+      
+    </div>
+  `;
+};
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
+
 module.exports = Util;
