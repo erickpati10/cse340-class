@@ -36,10 +36,14 @@ invCont.getVehicleDetails = async function (req, res) {
       // Handle case where vehicle details are not found
       return res.status(404).send("Vehicle not found");
     }
+    let nav = await utilities.getNav();
 
     const htmlContent = utilities.wrapVehicleDetailsInHTML(vehicleDetails);
-
-    res.send(htmlContent);
+    res.render("./inventory/vehicle", {
+      title: vehicleDetails.inv_model,
+      nav: nav,
+      htmlContent,
+    });
   } catch (error) {
     console.error("Error fetching vehicle details:", error);
     res.status(500).send("Internal Server Error");

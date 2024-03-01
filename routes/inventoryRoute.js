@@ -10,12 +10,12 @@ router.get("/detail/:inventory_id", invController.getVehicleDetails);
 
 // / Route to display details of a specific vehicle
 
-router.get("/detail/:inventory_id", async (req, res) => {
-  const nav = await utilities.getNav();
-  res.render("./inventory/detail", {
-    title: "Your Title",
-    nav,
-  });
-});
+// router.get("/detail/:inventory_id", async (req, res) => {
+//   const nav = await utilities.getNav();
+//   res.render("./inventory/detail", {
+//     title: "Your Title",
+//     nav,
+//   });
+// });
 
 module.exports = router;

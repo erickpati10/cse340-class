@@ -33,7 +33,7 @@ async function getInventoryByClassificationId(classification_id) {
 async function getVehicleById(inv_id) {
   try {
     const data = await pool.query(
-      "SELECT inv_id, inv_make, inv_model, inv_price, inv_image, inv_year, inv_miles /* add other columns as needed */ FROM public.inventory WHERE inv_id = $1",
+      "SELECT inv_id, inv_make, inv_model, inv_price, inv_image, inv_year, inv_miles, inv_color, inv_description/* add other columns as needed */ FROM public.inventory WHERE inv_id = $1",
 
       [inv_id]
     );

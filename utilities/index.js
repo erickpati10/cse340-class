@@ -40,6 +40,7 @@ Util.buildClassificationGrid = async function (data) {
         vehicle.inv_model +
         "</a>";
       grid += "</h2>";
+
       grid +=
         "<span>$" +
         new Intl.NumberFormat("en-US").format(vehicle.inv_price) +
@@ -81,17 +82,25 @@ Util.getNav = async function (req, res, next) {
  * Wrap vehicle details in HTML
  **************************************** */
 Util.wrapVehicleDetailsInHTML = (vehicleDetails) => {
+  console.log(vehicleDetails);
   return `
     <div>
-      <h2>${vehicleDetails.inv_make} ${vehicleDetails.inv_model}</h2>
+      <h2> ${vehicleDetails.inv_year} ${vehicleDetails.inv_make} ${
+    vehicleDetails.inv_model
+  } 
+  </h2>
       <img src="${vehicleDetails.inv_image}" alt="${vehicleDetails.inv_make} ${
     vehicleDetails.inv_model
   }">
-      <p>Year: ${vehicleDetails.inv_year}</p>
-      <p>Price: $${new Intl.NumberFormat("en-US").format(
+      <h3>${vehicleDetails.inv_make} ${vehicleDetails.inv_model} Details</h3>
+      <p><b>Price: </b>$${new Intl.NumberFormat("en-US").format(
         vehicleDetails.inv_price
       )}</p>
-      <p>Mileage: ${new Intl.NumberFormat("en-US").format(
+      <p><b>Description: </b> ${vehicleDetails.inv_description} </p>
+
+      <p><b>Color: </b>${vehicleDetails.inv_color}</p>
+     
+      <p><b>Mileage:</b> ${new Intl.NumberFormat("en-US").format(
         vehicleDetails.inv_miles
       )} miles</p>
       
