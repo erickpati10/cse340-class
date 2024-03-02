@@ -17,6 +17,9 @@ const app = express();
 const static = require("./routes/static");
 const utilities = require("./utilities/");
 
+// Serve static files from the 'public' directory
+app.use(express.static("public"));
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -56,10 +59,6 @@ app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`);
 });
 
-/* ***********************
- * Express Error Handler
- * Place after all other middleware
- *************************/
 /* ***********************
  * Express Error Handler
  * Place after all other middleware
