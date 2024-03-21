@@ -50,4 +50,44 @@ invCont.getVehicleDetails = async function (req, res) {
   }
 };
 
+// Render view to add new classification
+invCont.renderAddClassification = function (req, res) {
+  // Render the view to add new classification
+  res.render("./inventory/addClassification", {
+    title: "Add New Classification",
+  });
+};
+
+// Handle adding new classification
+invCont.addNewClassification = async function (req, res) {
+  try {
+    // Logic to add new classification
+    // Example: const newClassification = await invModel.createClassification(req.body);
+    // Redirect to appropriate page after adding
+    res.redirect("/inventory");
+  } catch (error) {
+    console.error("Error adding new classification:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+// Render view to add new inventory
+invCont.renderAddInventory = function (req, res) {
+  // Render the view to add new inventory
+  res.render("./inventory/addInventory", { title: "Add New Inventory" });
+};
+
+// Handle adding new inventory
+invCont.addNewInventory = async function (req, res) {
+  try {
+    // Logic to add new inventory
+    // Example: const newInventoryItem = await invModel.createInventoryItem(req.body);
+    // Redirect to appropriate page after adding
+    res.redirect("/inventory");
+  } catch (error) {
+    console.error("Error adding new inventory:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = invCont;
