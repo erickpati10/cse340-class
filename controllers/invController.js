@@ -50,43 +50,70 @@ invCont.getVehicleDetails = async function (req, res) {
   }
 };
 
+// create the page for the links
+
+invCont.renderManagement = async function (req, res) {
+  let nav = await utilities.getNav();
+  res.render("inventory/management", { title: "Vehicle Management", nav });
+};
+
 // Render view to add new classification
-invCont.renderAddClassification = function (req, res) {
-  // Render the view to add new classification
-  res.render("./inventory/addClassification", {
-    title: "Add New Classification",
+invCont.renderAddClassification = async function (req, res) {
+  let nav = await utilities.getNav();
+  res.render("inventory/addClassification", {
+    title: "Add Classification",
+    nav,
   });
 };
 
-// Handle adding new classification
-invCont.addNewClassification = async function (req, res) {
-  try {
-    // Logic to add new classification
-    // Example: const newClassification = await invModel.createClassification(req.body);
-    // Redirect to appropriate page after adding
-    res.redirect("/inventory");
-  } catch (error) {
-    console.error("Error adding new classification:", error);
-    res.status(500).send("Internal Server Error");
-  }
-};
+// invCont.addNewClassification = async function (req, res) {
+//   try {
+//     const { classification_name } = req.body;
 
-// Render view to add new inventory
-invCont.renderAddInventory = function (req, res) {
-  // Render the view to add new inventory
-  res.render("./inventory/addInventory", { title: "Add New Inventory" });
-};
+// Call the model function to insert data into the database
+//     let completeClassification =
+//       invModel.addClassification(classification_name);
 
-// Handle adding new inventory
-invCont.addNewInventory = async function (req, res) {
+//     // Redirect to appropriate page after adding
+//     if (completeClassification) {
+//       req.flash("notice", "Classification added successfully.");
+//       res.redirect("./");
+//     } else {
+//       console.error("Error adding new classification:", error);
+//       req.flash("notice", "Failed to add classification.");
+//       res.redirect("./addClassification");
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+/* ***************************
+ * Process Add Classification Page Form
+ * ************************** */
+invCont.addNewClassification = async function (req, res, next) {
   try {
-    // Logic to add new inventory
-    // Example: const newInventoryItem = await invModel.createInventoryItem(req.body);
-    // Redirect to appropriate page after adding
-    res.redirect("/inventory");
+    const { classification_name } = req.body;
+
+    const registerNewClassification = await invModel.addClassification(
+      classification_name
+    );
+
+    if (registerNewClassification) {
+      req.flash(
+        "notice",
+        `Congratulations, you just added ${classification_name} as a classification. `
+      );
+      res.status(201).redirect("./");
+    } else {
+      req.flash("notice", "Sorry, the registration failed.");
+      return res.status(501).redir("/addClassification", {
+        title: "Add Classification",
+        nav: await utilities.getNav(),
+      });
+    }
   } catch (error) {
-    console.error("Error adding new inventory:", error);
-    res.status(500).send("Internal Server Error");
+    next(error);
   }
 };
 

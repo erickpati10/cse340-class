@@ -34,6 +34,11 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout");
 
+// Serve favicon
+app.get("/favicon.ico", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "images", "favicon.ico"));
+});
+
 /* ***********************
  * Middleware
  * ************************/

@@ -10,6 +10,8 @@ router.get("/detail/:inventory_id", invController.getVehicleDetails);
 
 // *******************************************
 
+router.get("/", invController.renderManagement);
+
 // Route to render the view for adding a new classification
 router.get("/addClassification", invController.renderAddClassification);
 
@@ -17,10 +19,10 @@ router.get("/addClassification", invController.renderAddClassification);
 router.post("/addClassification", invController.addNewClassification);
 
 // Route to render the view for adding a new inventory item
-router.get("/addInventory", invController.renderAddInventory);
+// router.get("/addInventory", invController.renderAddInventory);
 
 // Route to handle adding a new inventory item
-router.post("/addInventory", invController.addNewInventory);
+// router.post("/addInventory", invController.addNewInventory);
 
 // / Route to display details of a specific vehicle
 
