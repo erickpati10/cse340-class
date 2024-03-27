@@ -66,28 +66,6 @@ invCont.renderAddClassification = async function (req, res) {
   });
 };
 
-// invCont.addNewClassification = async function (req, res) {
-//   try {
-//     const { classification_name } = req.body;
-
-// Call the model function to insert data into the database
-//     let completeClassification =
-//       invModel.addClassification(classification_name);
-
-//     // Redirect to appropriate page after adding
-//     if (completeClassification) {
-//       req.flash("notice", "Classification added successfully.");
-//       res.redirect("./");
-//     } else {
-//       console.error("Error adding new classification:", error);
-//       req.flash("notice", "Failed to add classification.");
-//       res.redirect("./addClassification");
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 /* ***************************
  * Process Add Classification Page Form
  * ************************** */
@@ -107,8 +85,61 @@ invCont.addNewClassification = async function (req, res, next) {
       res.status(201).redirect("./");
     } else {
       req.flash("notice", "Sorry, the registration failed.");
-      return res.status(501).redir("/addClassification", {
+      return res.status(501).redir("/addclassification", {
         title: "Add Classification",
+        nav: await utilities.getNav(),
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Render view to add new Inventory
+invCont.renderAddInventory = async function (req, res) {
+  let nav = await utilities.getNav();
+
+  res.render("inventory/addInventory", {
+    title: "Add New Inventory",
+    nav,
+  });
+};
+
+invCont.addNewInventory = async function (req, res, next) {
+  try {
+    const {
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+    } = req.body;
+    const addVehicle = await invModel.addNewInventory(
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_color,
+      inv_miles
+    );
+    if (addVehicle) {
+      req.flash(
+        "notice",
+        `Congratulations, you just added ${inv_make} ${inv_model} as a new Car.`
+      );
+
+      res.status(201).redirect("/inv");
+    } else {
+      req.flash("notice", "Sorry, the registration failed.");
+      return res.status(501).render("inventory/addInventory", {
+        title: "Add Inventory",
         nav: await utilities.getNav(),
       });
     }

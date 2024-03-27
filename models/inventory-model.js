@@ -38,7 +38,7 @@ async function getVehicleById(inv_id) {
       [inv_id]
     );
 
-    return data.rows[0]; // Assuming there is only one result for a specific inventory_id
+    return data.rows[0];
   } catch (error) {
     console.error("getVehicleById error " + error);
     throw error;
@@ -48,25 +48,50 @@ async function getVehicleById(inv_id) {
 /* ***************************
  *  Add a new classification
  * ************************** */
-// async function addClassification(classification_name) {
-//   try {
-//     const result = await pool.query(
-//       "INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *",
-//       [classification_name]
-//     );
-//     return result.rows[0];
-//   } catch (error) {
-//     console.error("Error adding new classification:", error);
-//     throw error;
-//   }
-// }
 
 async function addClassification(classification_name) {
   try {
-    const sql = "INSERT INTO classification (classification_name) VALUEs ($1)";
-    return await pool.query(sql, [classification_name]);
+    const sql =
+      "INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *";
+    const data = await pool.query(sql, [classification_name]);
+    return data.rows[0];
   } catch (error) {
-    return error.message;
+    console.error("model error: " + error);
+  }
+}
+
+/* ***************************
+ *  Add a new Inventory
+ * ************************** */
+
+async function addNewInventory(
+  inv_make,
+  inv_model,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_year,
+  inv_miles,
+  inv_color,
+  classification_id
+) {
+  try {
+    const sql =
+      "INSERT INTO public.inventory(inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id) VALUES ($1) RETURNING *";
+    const data = await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+    ]);
+    return data.rows[0];
+  } catch (error) {
+    console.error("model error: " + error);
   }
 }
 
@@ -75,4 +100,5 @@ module.exports = {
   getInventoryByClassificationId,
   getVehicleById,
   addClassification,
+  addNewInventory,
 };
