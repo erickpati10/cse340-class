@@ -1,50 +1,42 @@
 <h1><%= title %></h1>
 
 <form action="addInventory" method="POST">
-  <label for="classification_name">Classification:</label><br />
-  <select id="classification_name" name="classification_name">
-    <option value="Choose a Classification">Choose a Classification</option>
-    <option value="Custom">Custom</option>
-    <option value="New">New</option>
-    <option value="Sedan">Sedan</option>
-    <option value="Sport">Sport</option>
-    <option value="SUV">SUV</option>
-    <option value="Truck">Truck</option>
-  </select>
+  <label for="classificationList">Classification</label>
+  <%- classificationSelect %>
   <br /><br />
 
   <label for="make">Make:</label>
-  <input type="text" id="inv_make" name="make" required /><br /><br />
+  <input type="text" id="inv_make" name="inv_make" required /><br /><br />
 
   <label for="model">Model:</label>
-  <input type="text" id="inv_model" name="model" required /><br /><br />
+  <input type="text" id="inv_model" name="inv_model" required /><br /><br />
 
   <label for="description">Description:</label> <br />
   <textarea
     id="inv_description"
-    name="description"
+    name="inv_description"
     rows="10"
     cols="80"
   ></textarea
   ><br /><br />
 
   <label for="imagePath">Image Path:</label> <br />
-  <input type="text" id="inv_image" name="imagePath" /><br />
+  <input type="text" id="inv_image" name="inv_image" /><br />
 
   <label for="imagePath">Thumbnail Path:</label>
   <input type="text" id="inv_thumbnail" name="inv_thumbnail" /><br />
 
   <label for="price">Price:</label>
-  <input type="number" id="inv_price" name="price" required /><br /><br />
+  <input type="number" id="inv_price" name="inv_price" required /><br /><br />
 
   <label for="year">Year:</label>
-  <input type="number" id="inv_year" name="year" required /><br /><br />
+  <input type="number" id="inv_year" name="inv_year" required /><br /><br />
 
   <label for="miles">Mileage:</label>
-  <input type="number" id="inv_miles" name="miles" required /><br /><br />
+  <input type="number" id="inv_miles" name="inv_miles" required /><br /><br />
 
   <label for="color">Color:</label>
-  <input type="text" id="inv_color" name="year" required /><br /><br />
+  <input type="text" id="inv_color" name="inv_color" required /><br /><br />
 
   <button type="submit">Submit</button>
 </form>

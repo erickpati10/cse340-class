@@ -85,23 +85,28 @@ invCont.addNewClassification = async function (req, res, next) {
       res.status(201).redirect("./");
     } else {
       req.flash("notice", "Sorry, the registration failed.");
-      return res.status(501).redir("/addclassification", {
-        title: "Add Classification",
+      return res.status(501).render("inventory/addInventory", {
+        title: "Add Inventory",
         nav: await utilities.getNav(),
+        classificationSelect: await utilities.buildClassificationList(),
       });
     }
   } catch (error) {
     next(error);
   }
 };
-
+// **************************************
 // Render view to add new Inventory
+// **************************************
+
 invCont.renderAddInventory = async function (req, res) {
   let nav = await utilities.getNav();
+  const classificationSelect = await utilities.buildClassificationList();
 
   res.render("inventory/addInventory", {
     title: "Add New Inventory",
     nav,
+    classificationSelect,
   });
 };
 
@@ -117,6 +122,7 @@ invCont.addNewInventory = async function (req, res, next) {
       inv_year,
       inv_miles,
       inv_color,
+      classification_id,
     } = req.body;
     const addVehicle = await invModel.addNewInventory(
       inv_make,
@@ -126,8 +132,9 @@ invCont.addNewInventory = async function (req, res, next) {
       inv_thumbnail,
       inv_price,
       inv_year,
+      inv_miles,
       inv_color,
-      inv_miles
+      classification_id
     );
     if (addVehicle) {
       req.flash(
@@ -141,6 +148,7 @@ invCont.addNewInventory = async function (req, res, next) {
       return res.status(501).render("inventory/addInventory", {
         title: "Add Inventory",
         nav: await utilities.getNav(),
+        classificationSelect: await utilities.buildClassificationList(),
       });
     }
   } catch (error) {
