@@ -9,13 +9,22 @@ const regValidate = require("../utilities/account-validation");
 
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
+// view Management account
+
+router.get(
+  "/",
+  utilities.handleErrors(accountController.showAccountManagement)
+);
+
 // Deliver Registration view
 router.get(
   "/register",
   utilities.handleErrors(accountController.buildRegister)
 );
 
-// Process the registration data
+// Login Process the registration data
+// Unit 4 - stickiness activity
+// Modified in Unit 5 - Login Process
 router.post(
   "/register",
   regValidate.registationRules(),
@@ -23,10 +32,13 @@ router.post(
   utilities.handleErrors(accountController.registerAccount)
 );
 
-// Process the login attempt
-router.post("/login", (req, res) => {
-  res.status(200).send("login process");
-});
+// Process the login request
+router.post(
+  "/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
+);
 
 // Export the router for use in server.js
 module.exports = router;
