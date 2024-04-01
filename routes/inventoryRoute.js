@@ -18,20 +18,27 @@ router.get("/addClassification", invController.renderAddClassification);
 // Route to handle adding a new classification
 router.post("/addClassification", invController.addNewClassification);
 
+/************************************
+ * Get inventory for AJAX route
+ * Unit 5 - Select inv item activity
+ ************************************* */
+
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
 // Route to render the view for adding a new inventory item
 router.get("/addInventory", invController.renderAddInventory);
 
 // Route to handle adding a new inventory item
 router.post("/addInventory", invController.addNewInventory);
 
-// / Route to display details of a specific vehicle
+router.get(
+  "/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryView)
+);
 
-// router.get("/detail/:inventory_id", async (req, res) => {
-//   const nav = await utilities.getNav();
-//   res.render("./inventory/detail", {
-//     title: "Your Title",
-//     nav,
-//   });
-// });
+router.post("/update/", invController.updateInventory);
 
 module.exports = router;

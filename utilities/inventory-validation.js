@@ -30,4 +30,21 @@ validate.checkClassificationData = async (req, res, next) => {
   next();
 };
 
+validate.checkUpdateData = async (req, res, next) => {
+  const { inv_id } = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("inventory/edit", {
+      errors,
+      title: "Edit " + itemName,
+      nav,
+      inv_id,
+    });
+    return;
+  }
+  next();
+};
+
 module.exports = validate;

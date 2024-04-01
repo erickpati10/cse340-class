@@ -85,25 +85,16 @@ validate.checkRegData = async (req, res, next) => {
 
 validate.loginRules = () => {
   return [
-    // valid email is required and cannot already exist in the DB
+    // valid email is required and cannot already exist in the database
     body("account_email")
       .trim()
       .isEmail()
       .normalizeEmail() // refer to validator.js docs
-      .withMessage("A valid email is required.")
-      .custom(async (account_email) => {
-        const emailExists = await accountModel.checkExistingEmail(
-          account_email
-        );
-        if (emailExists) {
-          throw new Error("Email exists. Please log in or use different email");
-        }
-      }),
+      .withMessage("A valid email is required."),
 
     // password is required and must be strong password
     body("account_password")
       .trim()
-      .notEmpty()
       .isStrongPassword({
         minLength: 12,
         minLowercase: 1,
@@ -114,13 +105,12 @@ validate.loginRules = () => {
       .withMessage("Password does not meet requirements."),
   ];
 };
-
 /* ******************************
  * Check data and return errors or continue to Login
  * ***************************** */
 
 validate.checkLoginData = async (req, res, next) => {
-  const { account_firstname, account_lastname, account_email } = req.body;
+  const { account_email } = req.body;
   let errors = [];
   errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -129,8 +119,6 @@ validate.checkLoginData = async (req, res, next) => {
       errors,
       title: "Login",
       nav,
-      account_firstname,
-      account_lastname,
       account_email,
     });
     return;
