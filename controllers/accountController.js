@@ -141,6 +141,82 @@ async function accountLogin(req, res) {
 }
 
 
+// ********************************************************TASKS**********************************************************
+
+
+/* ****************************************
+ *  Deliver login access page
+ * ************************************ */
+async function accountLoginSuccess(req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("account/accountManagement", {
+    title: "Login Successful",
+    nav,
+    errors: null
+  })
+}
+
+/* ****************************************
+ *  Deliver Update Account page
+ * ************************************ */
+async function updateAccountPage(req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("account/updateAccount", {
+    title: "Update Account",
+    nav,
+    errors: null
+  })
+}
+
+
+/* ****************************************
+ *  Process the account update request
+ * ************************************ */
+async function updateAccount(req, res, next) {
+  try {
+    const { account_firstname, account_lastname, account_email, account_id } = req.body;
+
+    await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email);
+
+    await accountModel.getAccountById(account_id);
+    req.flash("notice", `${account_firstname}, your account was updated successfully.`);
+    return res.redirect("account/accountManagement");
+  } catch (error) {
+    console.error("Error updating account information:", error);
+    next(error);
+  }
+}
+
+
+
+/* ****************************************
+ *  Process the password update request
+ * ************************************ */
+async function updatePassword(req, res, next) {
+  try {
+    const { new_password, account_id } = req.body;
+
+    const hashedPassword = await bcrypt.hash(new_password, 10);
+
+    await accountModel.updatePassword(account_id, hashedPassword);
+    req.flash("notice", `${account_firstname}, your password updated successfully.`);
+    res.redirect("/account");
+  } catch (error) {
+    console.error("Error updating password:", error);
+    next(error);
+  }
+}
+
+
+/* ****************************************
+ *  Handle logout
+ * ************************************ */
+async function logout(req, res) {
+  res.clearCookie('jwt');
+  res.redirect('/');
+}
+
+
 
 module.exports = {
   buildLogin,
@@ -148,5 +224,11 @@ module.exports = {
   registerAccount,
   accountLogin,
   showAccountManagement,
+  accountLoginSuccess,
+  updateAccountPage,
+  updateAccount,
+  updatePassword,
+  logout,
+  
 
 };

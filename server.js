@@ -8,21 +8,20 @@
 
 const session = require("express-session");
 const pool = require("./database/");
-
 const baseController = require("./controllers/baseController");
 const accountRouter = require("./routes/accountRoute");
 const inventoryRoute = require("./routes/inventoryRoute");
 const invController = require("./controllers/invController");
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
 const app = express();
 const static = require("./routes/static");
 const utilities = require("./utilities/");
+const path = require("path");
+
 
 // Serve static files from the 'public' directory
 app.use(express.static("public"));
@@ -62,6 +61,7 @@ app.use(function (req, res, next) {
   res.locals.messages = require("express-messages")(req, res);
   next();
 });
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded

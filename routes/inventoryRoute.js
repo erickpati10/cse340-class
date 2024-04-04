@@ -32,7 +32,7 @@ router.get(
 router.get("/addInventory", invController.renderAddInventory);
 
 // Route to handle adding a new inventory item
-router.post("/addInventory", invController.addNewInventory);
+router.post("inv/addInventory", invController.addNewInventory);
 
 router.get(
   "/edit/:inv_id",
@@ -47,7 +47,7 @@ router.get(
 );
 
 router.post("/delete/",   
-utilities.handleErrors(invController.deleteItem)
+utilities.handleErrors(invController.deleteInventoryItem)
 );
 
 module.exports = router;

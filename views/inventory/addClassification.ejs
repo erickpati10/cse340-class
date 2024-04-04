@@ -1,12 +1,6 @@
 <h1><%= title %></h1>
 
-<%- messages() %> <% if (errors) { %>
-<ul class="message warning">
-  <% errors.array().forEach(error => { %>
-  <li><%= error.msg %></li>
-  <% }) %>
-</ul>
-<% } %>
+
 
 <div>
   <form action="/inv/addClassification" method="POST">

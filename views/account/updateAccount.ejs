@@ -1,0 +1,42 @@
+<h1><%= title %></h1>
+
+
+<!-- Account Update Form -->
+<form class="acct-update-form" action="/account/updateAccount" method="POST">
+  <h2>Account Update</h2>
+  <label for="account_firstname">First Name:</label>
+  <input type="text" id="account_firstname" name="account_firstname"
+    value="<%= accountData.account_firstname %>" required>
+  <label for="account_lastname">Last Name:</label>
+  <input type="text" id="account_lastname" name="account_lastname"
+    value="<%= accountData.account_lastname %>" required>
+  <label for="account_email">Email Address:</label>
+  <input type="email" id="account_email" name="account_email"
+    value="<%= accountData.account_email %>" required>
+  <!-- Add hidden field for account_id -->
+  <input type="hidden" id="account_id" name="account_id"
+    value="<%= accountData.account_id %>">
+  <button type="submit">Update Account</button>
+</form>
+
+<!-- Change Password Form -->
+<form class="pwd-update-form mt-4" action="/account/update_password"
+  method="POST" onsubmit="return checkPasswordMatch();">
+  <h2>Change Password</h2>
+
+  <label for="new_password">New Password:</label>
+  <input type="password" id="new_password"
+    name="account_password"
+    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{12,}$" required>
+  <!-- Add hidden field for account_id -->
+  <input type="hidden" id="account_id" name="account_id"
+    value="<%= accountData.account_id %>">
+  <button type="submit">Change Password</button>
+
+  
+  <div id="pswdBtn">Show Password</div>
+  <span class="error-message">Password must be at least 12 characters long and
+    contain 1 uppercase letter and 1 lowercase letter, 1 number, and a special
+    character.</span>
+</form>
+

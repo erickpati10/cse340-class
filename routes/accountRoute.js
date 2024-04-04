@@ -41,7 +41,30 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 );
 
+// **********************************************
 
+//Deliver Account Management Page
+router.get("/", utilities.handleErrors(accountController.accountLoginSuccess));
+
+
+// Deliver the account update view
+router.get("/updateAccount", utilities.handleErrors(accountController.updateAccountPage));
+
+// Route to process the account update request
+router.post("/updateAccount",
+  regValidate.updateAccountRules(),
+  regValidate.checkUpdateAccountData,
+  utilities.handleErrors(accountController.updateAccount));
+
+// Route to process the password update request
+router.post("/update_password",
+  regValidate.updatePasswordRules(),
+  regValidate.checkUpdatePasswordData,
+  utilities.handleErrors(
+  accountController.updatePassword));
+
+
+router.get("/logout", utilities.handleErrors( accountController.logout));
 
 // Export the router for use in server.js
 module.exports = router;
