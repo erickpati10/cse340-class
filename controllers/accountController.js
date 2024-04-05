@@ -174,18 +174,39 @@ async function updateAccountPage(req, res, next) {
  * ************************************ */
 async function updateAccount(req, res, next) {
   try {
-    const { account_firstname, account_lastname, account_email, account_id } = req.body;
-
-    await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email);
-
-    await accountModel.getAccountById(account_id);
-    req.flash("notice", `${account_firstname}, your account was updated successfully.`);
-    return res.redirect("account/accountManagement");
+    const { account_firstname, account_lastname, account_email, account_id } =
+      req.body;
+ 
+    await accountModel.updateAccount(
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    );
+ 
+    const updatedAccount = await accountModel.getAccountById(account_id);
+    req.flash(
+      "notice",
+      `${account_firstname}, your account was updated successfully.`
+    );
+      // Rebuild the JWT with new data
+    delete updatedAccount.account_password;
+    const accessToken = jwt.sign(
+      updatedAccount,
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: 3600 * 1000,
+      }
+    );
+    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+    return res.redirect("/account");
   } catch (error) {
     console.error("Error updating account information:", error);
     next(error);
   }
 }
+
+
 
 
 
