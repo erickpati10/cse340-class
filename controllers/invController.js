@@ -1,6 +1,8 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
 
+
+
 const invCont = {};
 
 /* ***************************
@@ -316,6 +318,8 @@ else {
 }
 
 };
+
+
 
 
 module.exports = invCont;
